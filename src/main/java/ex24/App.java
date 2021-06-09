@@ -28,12 +28,12 @@ public class App {
         return String.format("\"%s\" and \"%s\" are not anagrams.", firstString, secondString);
     }
 
-    private Boolean isAnagram(String firstString, String secondString) {
+    public Boolean isAnagram(String firstString, String secondString) {
         int lenFirstStr = computeLength(firstString);
         int lenSecondStr = computeLength(secondString);
         if (lenFirstStr != lenSecondStr) {
             System.out.println("The strings were not the same length so they can't be anagrams.");
-            System.exit(0);
+            return false;
         }
         char arrFirstStr[] = createArray(lenFirstStr, firstString);
         char arrSecondStr[] = createArray(lenSecondStr, secondString);

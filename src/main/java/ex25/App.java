@@ -38,7 +38,7 @@ public class App {
         return String.format("The password '%s' is a %s password.", passwordInput, strengthOfPassword);
     }
 
-    private int passwordValidator(String passwordInput) {
+    public int passwordValidator(String passwordInput) {
         int passwodLength = getPasswordLength(passwordInput);
         if (passwodLength < 8) {
             int weakness = determineWeakness(passwordInput);
