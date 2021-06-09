@@ -16,7 +16,7 @@ public class Adder {
     }
 
     private double[] getInput() {
-        double[] numArray = new double[];
+        double[] numArray = new double[4];
         System.out.print("How many numbers do you want to add? ");
         int getArrayLen = in.nextInt();
         for (int i = 0; i < getArrayLen; i++) {

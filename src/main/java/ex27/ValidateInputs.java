@@ -4,6 +4,7 @@
  */
 package ex27;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ValidateInputs {
@@ -16,65 +17,69 @@ public class ValidateInputs {
         String lastName = newInputs.readInput("Enter the last name: ");
         String zipCode = newInputs.readInput("Enter the ZIP code: ");
         String employeeID = newInputs.readInput("Enter an employee ID: ");
-        String outputString = newInputs.validateInput(firstName, lastName, zipCode, employeeID);
+        ArrayList<String> outputString = newInputs.validateInput(firstName, lastName, zipCode, employeeID);
         newInputs.printOutputString(outputString);
     }
 
-    private void printOutputString(String outputString) {
-        System.out.println(outputString);
+    private void printOutputString(ArrayList<String> outputString) {
+        if (outputString.size() == 1) {
+            System.out.println("There were no errors found.");
+        } else {
+            for (int i = 1; i < outputString.size(); i++) {
+                System.out.println(outputString.get(i));
+            }
+        }
+
     }
 
-    public String validateInput(String firstName, String lastName, String zipCode, String employeeID) {
-        String firstNameValid = validateFirstName(firstName);
-        String lastNameValid = validateLastName(lastName);
-        String zipCodeValid = validateZIPCode(zipCode);
-        String employeeIDValid = validateEmployeeID(employeeID);
+    public ArrayList<String> validateInput(String firstName, String lastName, String zipCode, String employeeID) {
 
-        if (firstNameValid.equals("no errors") && lastNameValid.equals("no errors") && zipCodeValid.equals("no errors") && employeeIDValid.equals("no errors")) {
-            return "There were no errors found";
+        ArrayList<String> errors = new ArrayList<String>();
+        String firstNameErrors = validateFirstName(firstName);
+        String lastNameErrors = validateLastName(lastName);
+        String zipCodeErrors = validateZIPCode(zipCode);
+        String employeeIDErrors = validateEmployeeID(employeeID);
+
+        if (firstName.length() != 0) {
+            errors.add(firstNameErrors);
         }
-
-        String outputString = generateOutputString(firstNameValid, lastNameValid, zipCodeValid, employeeIDValid);
-        return outputString;
+        if (lastNameErrors.length() != 0) {
+            errors.add(lastNameErrors);
+        }
+        if (zipCodeErrors.length() != 0) {
+            errors.add(zipCodeErrors);
+        }
+        if (employeeIDErrors.length() != 0) {
+            errors.add(employeeIDErrors);
+        }
+        return errors;
     }
 
-    private String generateOutputString(String firstNameValid, String lastNameValid, String zipCodeValid, String employeeIDValid) {
-        String outputString = "";
-        if (!firstNameValid.equals("no errors")) {
-            outputString = firstNameValid + "\n";
-        }
-        if (!lastNameValid.equals("no errors")) {
-            outputString += lastNameValid + "\n";
-        }
-        if (!zipCodeValid.equals("no errors")) {
-            outputString += zipCodeValid + "\n";
-        }
-        if (!employeeIDValid.equals("no errors")) {
-            outputString += employeeIDValid + "\n";
-        }
-        return outputString;
-    }
 
     private String validateEmployeeID(String employeeID) {
         int lengthEmployeeID = getLength(employeeID);
         boolean isIDValid = true;
         char[] employeeIDArray = employeeID.toCharArray();
-        for (int i = 0; i < 2; i++) {
-            char character = employeeIDArray[i];
-            if (!(character >= 'a' && character <= 'z')) {
+        while (isIDValid) {
+            for (int i = 0; i < 2; i++) {
+                char character = employeeIDArray[i];
+                if (!(character >= 'a' && character <= 'z')) {
+                    isIDValid = false;
+                }
+            }
+        }
+        while (isIDValid) {
+            try {
+                int i = Integer.parseInt(employeeID.substring(3, 6));
+            } catch (NumberFormatException nfe) {
                 isIDValid = false;
             }
         }
-
-        try {
-            int i = Integer.parseInt(employeeID.substring(3,6));
-        } catch (NumberFormatException nfe) {
-            isIDValid = false;
-        }
-
-        char character = employeeIDArray[2];
-        if (!(character == '-')) {
-            isIDValid = false;
+        while (isIDValid) {
+            char character = employeeIDArray[2];
+            if (!(character == '-')) {
+                isIDValid = false;
+            }
         }
 
         if (lengthEmployeeID == 0) {
@@ -86,7 +91,7 @@ public class ValidateInputs {
         } else if (isIDValid == false) {
             return String.format("%s is not a valid ID.", employeeID);
         } else {
-            return "no errors";
+            return "";
         }
     }
 
@@ -107,7 +112,7 @@ public class ValidateInputs {
         } else if (areLettersPresent) {
             return "The ZIP must be numeric.";
         } else {
-            return "no errors";
+            return "";
         }
     }
 
@@ -118,7 +123,7 @@ public class ValidateInputs {
         } else if (lengthLastName < 3) {
             return String.format("\"%s\" is not a valid first name. It is too short.", lastName);
         } else {
-            return "no errors";
+            return "";
         }
     }
 
@@ -129,7 +134,7 @@ public class ValidateInputs {
         } else if (lengthFirstName < 3) {
             return String.format("\"%s\" is not a valid first name. It is too short.", firstName);
         } else {
-            return "no errors";
+            return "";
         }
     }
 
