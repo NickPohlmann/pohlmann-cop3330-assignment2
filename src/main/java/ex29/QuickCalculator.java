@@ -23,10 +23,10 @@ public class QuickCalculator {
     }
 
     private String generateOutputString(double years) {
-        return String.format("It will take %.0f years to double your initial investment.", years);
+        return String.format("It will take %.1f years to double your initial investment.", years);
     }
 
-    private double calculateYears(double rateOfReturn) {
+    public double calculateYears(double rateOfReturn) {
         double years = 72 / rateOfReturn;
         return years;
     }

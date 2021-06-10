@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidateInputsTest {
 
-    //test for first name being empty
+    //test for all inputs being empty
     @Test
-    void firstNameEmpty() {
+    void allEmpty() {
         ValidateInputs newInputs = new ValidateInputs();
 
 

@@ -26,7 +26,7 @@ public class Adder {
         return String.format("The total is %f.", sum);
     }
 
-    private double computeSum(double[] numArray) {
+    public double computeSum(double[] numArray) {
         double sum = 0.0;
         for (int i = 0; i < numArray.length; i++) {
             sum += numArray[i];
