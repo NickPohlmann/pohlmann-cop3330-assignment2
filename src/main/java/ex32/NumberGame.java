@@ -14,7 +14,7 @@ public class NumberGame {
     public static void main(String[] args) {
         NumberGame newGame = new NumberGame();
 
-        System.out.print("Let's play Guess the Number!\n\n");
+        System.out.println("Let's play Guess the Number!\n");
         newGame.playGame();
 
     }
@@ -32,40 +32,44 @@ public class NumberGame {
     private int guessTheNumber() {
         int numGuesses = 0;
         int difficulty = getDifficultlyLevel("Enter the difficulty level (1, 2, or 3): ");
+        System.out.print("I have my number. What's your guess? ");
         int correctNum = getCorrectNum(difficulty);
         boolean youWon = false;
         while (!youWon) {
+            String yourGuess = getGuess();
             numGuesses = numGuesses + 1;
-            int guess = getGuess(numGuesses);
-            if (guess < correctNum) {
-                System.out.print("Too low. ");
-            } else if (guess > correctNum) {
-                System.out.print("Too high. ");
+            boolean yourGuessValid = validateYourGuess(yourGuess);
+            if (yourGuessValid) {
+                int yourGuessInt = Integer.parseInt(yourGuess);
+                if (yourGuessInt < correctNum) {
+                    System.out.print("Too low. Guess again: ");
+                } else if (yourGuessInt > correctNum) {
+                    System.out.print("Too high. Guess again: ");
+                } else {
+                    youWon = true;
+                }
             } else {
-                youWon = true;
+                System.out.print("The input enter is not valid, please enter an integer. \nGuess again: ");
             }
+
         }
         return numGuesses;
     }
 
-    private int getGuess(int numGuesses) {
-        int yourGuess = 0;
-        boolean isGuessInt = false;
-        while (!isGuessInt) {
-            if (numGuesses == 1) {
-                System.out.print("I have my number. What's your guess? ");
-            } else {
-                System.out.print("Guess again: ");
-            }
-            String guessStr = in.nextLine();
-            try {
-                yourGuess = Integer.parseInt(guessStr);
-                isGuessInt = true;
-            } catch (NumberFormatException nfe) {
-                isGuessInt = false;
-                System.out.println("Please enter a valid input.");
-            }
+    private boolean validateYourGuess(String yourGuess) {
+        boolean isInputInt = false;
+        int input = 0;
+        try {
+            input = Integer.parseInt(yourGuess);
+            isInputInt = true;
+        } catch (NumberFormatException nfe) {
+            isInputInt = false;
         }
+        return isInputInt;
+    }
+
+    private String getGuess() {
+        String yourGuess = in.nextLine();
         return yourGuess;
     }
 
