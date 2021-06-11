@@ -15,6 +15,6 @@ public class QuickCalcTest {
     void letterInput() {
         QuickCalculator newCalculator = new QuickCalculator();
 
-        double actual = newCalculator.calculateYears("")
+       // double actual = newCalculator.calculateYears("");
     }
 }
