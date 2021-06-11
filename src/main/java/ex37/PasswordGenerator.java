@@ -6,6 +6,7 @@
 package ex37;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -19,21 +20,72 @@ public class PasswordGenerator {
         int numSpecialChar = newPassword.getInput("How many special characters? ");
         int numNumbers = newPassword.getInput("How many numbers? ");
         ArrayList<ArrayList<String>> arrayOfLists = newPassword.createArrayOfLists();
-        String password = newPassword.generatePassword(minLen, numSpecialChar, numNumbers, arrayOfLists);
+        String passwordUnshuffled = newPassword.generateUnshuffledPassword(minLen, numSpecialChar, numNumbers, arrayOfLists);
+        String passwordShuffled = newPassword.shufflePassword(passwordUnshuffled);
+        String outputString = newPassword.generateOutputString(passwordShuffled);
+        newPassword.printOutputString(outputString);
     }
 
-    private String generatePassword(int minLen, int numSpecialChar, int numNumbers, ArrayList<ArrayList<String>> arrayOfLists) {
+    private String shufflePassword(String passwordUnshuffled) {
+        ArrayList<Character> passwordArray = new ArrayList<Character>();
+        String shuffledPassword = "";
+
+        for (int i = 0; i < passwordUnshuffled.length(); i++) {
+            passwordArray.add(passwordUnshuffled.charAt(i));
+        }
+        Collections.shuffle(passwordArray);
+
+        for (int i = 0; i < passwordUnshuffled.length(); i++) {
+            shuffledPassword += passwordArray.get(i);
+        }
+        return shuffledPassword;
+    }
+
+    private void printOutputString(String outputString) {
+        System.out.println(outputString);
+    }
+
+    private String generateOutputString(String password) {
+        return String.format("Your password is %s",password);
+    }
+
+    private String generateUnshuffledPassword(int minLen, int numSpecialChar, int numNumbers, ArrayList<ArrayList<String>> arrayOfLists) {
         int lenPassword = generatePasswordLen(minLen, numSpecialChar, numNumbers);
-        String password = new String;
+        String password = "";
         password += generateSpecialChars(numSpecialChar, arrayOfLists);
+        password += generateNumbers(numNumbers, arrayOfLists);
+        password += generateLetters(lenPassword, numNumbers, numSpecialChar, arrayOfLists);
+        System.out.println(password);
+        return password;
+    }
+
+    private String generateLetters(int lenPassword, int numNumbers, int numSpecialChar, ArrayList<ArrayList<String>> arrayOfLists) {
+        Random randomNumber = new Random();
+        int numOfLetters = lenPassword - numNumbers - numSpecialChar;
+        String letterStr = "";
+        for (int i = 0; i < numOfLetters; i++) {
+            int letterLenRand = randomNumber.nextInt(arrayOfLists.get(1).size());
+            letterStr += arrayOfLists.get(1).get(letterLenRand);
+        }
+        return letterStr;
+    }
+
+    private String generateNumbers(int numNumbers, ArrayList<ArrayList<String>> arrayOfLists) {
+        Random randomNumber = new Random();
+        String numberStr = "";
+        for (int i = 0; i < numNumbers; i++) {
+            int numberLenRand = randomNumber.nextInt(numNumbers);
+            numberStr += arrayOfLists.get(0).get(numberLenRand);
+        }
+        return numberStr;
     }
 
     private String generateSpecialChars(int numSpecialChar, ArrayList<ArrayList<String>> arrayOfLists) {
         Random randomNumber = new Random();
-        String specialCharStr = new String;
-        int specialCharLenRand = randomNumber.nextInt(arrayOfLists.get(3).size());
+        String specialCharStr = "";
         for (int i = 0; i < numSpecialChar; i++) {
-            specialCharStr += arrayOfLists.get(3).get(specialCharLenRand);
+            int specialCharLenRand = randomNumber.nextInt(numSpecialChar);
+            specialCharStr = specialCharStr + arrayOfLists.get(2).get(specialCharLenRand);
         }
         return specialCharStr;
     }
