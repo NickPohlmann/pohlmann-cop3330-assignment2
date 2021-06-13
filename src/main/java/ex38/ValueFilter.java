@@ -32,7 +32,7 @@ public class ValueFilter {
         return outputString;
     }
 
-    private ArrayList<Integer> filterOutOdds(ArrayList<Integer> inputList) {
+    protected ArrayList<Integer> filterOutOdds(ArrayList<Integer> inputList) {
         ArrayList<Integer> evenNumList = new ArrayList<Integer>();
         for (int i = 0; i < inputList.size(); i++) {
             int isEven = inputList.get(i) % 2;
