@@ -26,6 +26,12 @@ public class PasswordGenerator {
         newPassword.printOutputString(outputString);
     }
 
+    protected int getRandomNum(int bound) {
+        Random randNum = new Random();
+        int promptNum = randNum.nextInt(bound);
+        return promptNum;
+    }
+
     private String shufflePassword(String passwordUnshuffled) {
         ArrayList<Character> passwordArray = new ArrayList<Character>();
         String shuffledPassword = "";
@@ -55,16 +61,15 @@ public class PasswordGenerator {
         password += generateSpecialChars(numSpecialChar, arrayOfLists);
         password += generateNumbers(numNumbers, arrayOfLists);
         password += generateLetters(lenPassword, numNumbers, numSpecialChar, arrayOfLists);
-        System.out.println(password);
         return password;
     }
 
     private String generateLetters(int lenPassword, int numNumbers, int numSpecialChar, ArrayList<ArrayList<String>> arrayOfLists) {
-        Random randomNumber = new Random();
         int numOfLetters = lenPassword - numNumbers - numSpecialChar;
         String letterStr = "";
+        int randomNum = getRandomNum(numOfLetters);
         for (int i = 0; i < numOfLetters; i++) {
-            int letterLenRand = randomNumber.nextInt(arrayOfLists.get(1).size());
+            int letterLenRand = randomNum;
             letterStr += arrayOfLists.get(1).get(letterLenRand);
         }
         return letterStr;
@@ -81,10 +86,9 @@ public class PasswordGenerator {
     }
 
     private String generateSpecialChars(int numSpecialChar, ArrayList<ArrayList<String>> arrayOfLists) {
-        Random randomNumber = new Random();
         String specialCharStr = "";
         for (int i = 0; i < numSpecialChar; i++) {
-            int specialCharLenRand = randomNumber.nextInt(numSpecialChar);
+            int specialCharLenRand = getRandomNum(arrayOfLists.get(2).size());
             specialCharStr = specialCharStr + arrayOfLists.get(2).get(specialCharLenRand);
         }
         return specialCharStr;

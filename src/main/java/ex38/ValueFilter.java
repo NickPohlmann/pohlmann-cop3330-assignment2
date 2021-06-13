@@ -6,7 +6,6 @@
 package ex38;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ValueFilter {

@@ -41,7 +41,7 @@ public class StatisticsCalculator {
         return outputString;
     }
 
-    private double std(ArrayList<Integer> inputNumberList, double numListAverage) {
+    protected double std(ArrayList<Integer> inputNumberList, double numListAverage) {
         double std = 0;
         for (int i = 0; i < inputNumberList.size(); i++) {
             std += Math.pow((inputNumberList.get(i) - numListAverage), 2);
@@ -52,19 +52,19 @@ public class StatisticsCalculator {
         return std;
     }
 
-    private int max(ArrayList<Integer> inputNumberList) {
+    protected int max(ArrayList<Integer> inputNumberList) {
         Collections.sort(inputNumberList);
         int maxNum = inputNumberList.get(inputNumberList.size()-1);
         return maxNum;
     }
 
-    private int min(ArrayList<Integer> inputNumberList) {
+    protected int min(ArrayList<Integer> inputNumberList) {
         Collections.sort(inputNumberList);
         int minNum = inputNumberList.get(0);
         return minNum;
     }
 
-    private double average(ArrayList<Integer> inputNumberList) {
+    protected double average(ArrayList<Integer> inputNumberList) {
         int sum = 0;
         for (int i = 0; i < inputNumberList.size(); i++) {
             sum += inputNumberList.get(i);
