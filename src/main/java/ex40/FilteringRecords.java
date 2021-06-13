@@ -3,22 +3,42 @@
  *  Copyright 2021 Nicholas Pohlmann
  */
 
-package ex39;
+package ex40;
+
+import ex39.Employee;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class SortingRecords {
+public class FilteringRecords {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
-        SortingRecords sortingRecords = new SortingRecords();
-        HashMap<String, Employee> employeesByLastName = sortingRecords.getEmployeeMapByLastName();
-        ArrayList<String> lastNames = sortingRecords.getListLastNames();
-        sortingRecords.sortListLastName(lastNames);
-        String outputString = sortingRecords.generateOutputString(lastNames, employeesByLastName);
-        sortingRecords.printOutputString(outputString);
+        FilteringRecords filteringRecords = new FilteringRecords();
+        HashMap<String, Employee> employeesByLastName = filteringRecords.getEmployeeMapByLastName();
+        ArrayList<String> lastNames = filteringRecords.getListLastNames();
+        String searchStr =  filteringRecords.readInput("Enter a search string: ");
+        ArrayList<String> resultList = filteringRecords.filterEmployees(employeesByLastName, lastNames, searchStr);
+        String outputString = filteringRecords.generateOutputString(resultList, employeesByLastName);
+        filteringRecords.printOutputString(outputString);
+    }
+
+    protected ArrayList<String> filterEmployees(HashMap<String, Employee> employeesByLastName, ArrayList<String> lastNames, String searchString) {
+        ArrayList<String> resultList = new ArrayList<String>();
+        for (int i = 0; i < lastNames.size(); i++) {
+            Employee currentEmployee = employeesByLastName.get(lastNames.get(i));
+            if (currentEmployee.doesContainSubStringInFullName(searchString)) {
+                resultList.add(currentEmployee.getLastName());
+            }
+        }
+        return resultList;
+    }
+
+    private String readInput(String str) {
+        System.out.print(str);
+        String input = in.nextLine();
+        return input;
     }
 
     private void printOutputString(String outputString) {
@@ -44,10 +64,6 @@ public class SortingRecords {
         employeesByLastName.put("Jackson", new Employee("Jacquelyn", "Jackson", "DBA", ""));
         employeesByLastName.put("Webber", new Employee("Sally", "Webber", "Web Developer", "2015-12-18"));
         return employeesByLastName;
-    }
-
-    protected void sortListLastName(ArrayList<String> lastNames) {
-        lastNames.sort(String::compareToIgnoreCase);
     }
 
     private ArrayList<String> getListLastNames() {
