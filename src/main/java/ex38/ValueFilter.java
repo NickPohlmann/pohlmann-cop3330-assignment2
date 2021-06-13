@@ -45,17 +45,18 @@ public class ValueFilter {
     }
 
     private ArrayList<Integer> getInputList() {
-        boolean moreInput = true;
         ArrayList<Integer> inputList = new ArrayList<Integer>();
         System.out.print("Enter a list of numbers, separated by spaces: ");
-        while (moreInput) {
-            try{
-                int input = in.nextInt();
-                inputList.add(input);
-            } catch (NoSuchElementException NSEE) {
-                moreInput = false;
+        String input = in.nextLine();
+        for (int i = 0; i < input.length(); i += 2) {
+            try {
+                int inputInt = Integer.parseInt(input.substring(i,i+1));
+                inputList.add(inputInt);
+            } catch (NumberFormatException nfe) {
+                System.out.println("Invalid character");
             }
         }
+
         return inputList;
     }
 }

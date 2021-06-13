@@ -18,13 +18,12 @@ public class EmployeeListRemoval {
         System.out.println(String.format("There are %d employees: ", employeeList.size()));
         newRemoval.printArrayList(employeeList);
         String employeeToRemove = newRemoval.readInput("Enter an employee name to remove: ");
-        employeeList = newRemoval.removeEmployee(employeeList, employeeToRemove);
+        newRemoval.removeEmployee(employeeList, employeeToRemove);
         newRemoval.printArrayList(employeeList);
     }
 
-    private ArrayList<String> removeEmployee(ArrayList<String> originalEmployeeList, String employeeToRemove) {
+    protected void removeEmployee(ArrayList<String> originalEmployeeList, String employeeToRemove) {
         originalEmployeeList.remove(employeeToRemove);
-        return originalEmployeeList;
     }
 
     private String readInput(String str) {
@@ -39,7 +38,7 @@ public class EmployeeListRemoval {
         }
     }
 
-    private ArrayList<String> createOriginalEmployeeString() {
+    protected ArrayList<String> createOriginalEmployeeString() {
         ArrayList<String> originalEmployees = new ArrayList<String>();
         originalEmployees.add("John Smith");
         originalEmployees.add("Jackie Jackson");

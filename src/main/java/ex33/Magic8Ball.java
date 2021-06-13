@@ -14,7 +14,7 @@ public class Magic8Ball {
     public static void main(String[] args) {
         Magic8Ball newShake = new Magic8Ball();
 
-        String yourQuestion = newShake.readInput("What's your question?");
+        newShake.readInput("What's your question?");
         String response = newShake.getResponse();
         newShake.printResponse(response);
     }
@@ -24,12 +24,16 @@ public class Magic8Ball {
     }
 
     private String getResponse() {
-        Random randNum = new Random();
-        int promptNum = randNum.nextInt(4);
-
         String[] promptArray = new String[]{"Yes", "No", "Maybe", "Ask again later"};
+        int promptNum = getRandomNum(promptArray.length);
         String response = promptArray[promptNum];
         return response;
+    }
+
+    protected int getRandomNum(int bound) {
+        Random randNum = new Random();
+        int promptNum = randNum.nextInt(bound);
+        return promptNum;
     }
 
     private String readInput(String str) {

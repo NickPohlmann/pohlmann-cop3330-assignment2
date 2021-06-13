@@ -14,7 +14,6 @@ public class PickAWinner {
 
     public static void main(String[] args) {
         PickAWinner newWinner = new PickAWinner();
-
         ArrayList<String> contestantList = newWinner.getContestants();
         String winner = newWinner.pickWinner(contestantList);
         newWinner.printWinner(winner);
@@ -25,11 +24,16 @@ public class PickAWinner {
     }
 
     private String pickWinner(ArrayList<String> contestantList) {
-        Random randNum = new Random();
 
-        int winningNum = randNum.nextInt(contestantList.size());
+        int winningNum = getRandomNum(contestantList.size());
         String winner = contestantList.get(winningNum);
         return winner;
+    }
+
+    protected int getRandomNum(int bound) {
+        Random randNum = new Random();
+        int promptNum = randNum.nextInt(bound);
+        return promptNum;
     }
 
     private ArrayList<String> getContestants() {

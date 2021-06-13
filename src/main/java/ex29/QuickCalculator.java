@@ -12,10 +12,43 @@ public class QuickCalculator {
     public static void main(String[] args) {
         QuickCalculator newCalculator = new QuickCalculator();
 
-        double rateOfReturn = newCalculator.getRateOfReturn();
-        double years = newCalculator.calculateYears(rateOfReturn);
+        double validRateOfReturn = newCalculator.getValidRateOfReturn();
+        double years = newCalculator.calculateYears(validRateOfReturn);
+
         String outputString = newCalculator.generateOutputString(years);
         newCalculator.printOutputString(outputString);
+    }
+
+    private double getValidRateOfReturn() {
+        boolean rateOfReturnNotValid = true;
+        String rateOfReturnStr = "";
+        double rateOfReturn = 0;
+
+        while (rateOfReturnNotValid) {
+            System.out.print("What is the rate of return? ");
+            rateOfReturnStr = in.nextLine();
+
+            boolean isValid = isValid(rateOfReturnStr);
+
+            if (isValid) {
+                rateOfReturn = Double.parseDouble(rateOfReturnStr);
+                rateOfReturnNotValid = false;
+            } else {
+                System.out.println("Sorry. That's not a valid input.");
+            }
+        }
+        return rateOfReturn;
+    }
+
+    private boolean isValid(String input) {
+        boolean isValid = true;
+        try {
+            double i = Double.parseDouble(input);
+            isValid = (i > 0.0);
+        } catch (NumberFormatException nfe) {
+            isValid = false;
+        }
+        return isValid;
     }
 
     private void printOutputString(String outputString) {
@@ -27,37 +60,8 @@ public class QuickCalculator {
     }
 
     public double calculateYears(double rateOfReturn) {
-        double years = 72 / rateOfReturn;
+        double years = 72.0 / rateOfReturn;
         return years;
     }
 
-    private double getRateOfReturn() {
-        boolean rateOfReturnNotValid = true;
-        String rateOfReturnStr = "";
-
-        while (rateOfReturnNotValid) {
-            System.out.print("What is the rate of return? ");
-            rateOfReturnStr = in.nextLine();
-
-            boolean areThereLetters = false;
-            try {
-                double i = Double.parseDouble(rateOfReturnStr);
-            } catch (NumberFormatException nfe) {
-                areThereLetters = true;
-            }
-
-            if (areThereLetters) {
-                System.out.println("Sorry. That's not a valid input.");
-            } else {
-                double rateOfReturn = Double.parseDouble(rateOfReturnStr);
-                if (rateOfReturn <= 0.0) {
-                    System.out.println("Sorry. That's not a valid input.");
-                } else {
-                    rateOfReturnNotValid = false;
-                }
-            }
-        }
-        double rateOfReturn = Double.parseDouble(rateOfReturnStr);
-        return rateOfReturn;
-    }
 }

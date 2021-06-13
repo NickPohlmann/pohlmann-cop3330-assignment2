@@ -23,7 +23,7 @@ public class HeartRateTracker {
         System.out.println(table);
     }
 
-    private String createTable(int restingHR, int age) {
+    protected String createTable(int restingHR, int age) {
         String table = String.format("Resting Pulse: %d \t Age: %d\n\n", restingHR, age);
         table += String.format("Intensity    | Rate   \n");
         table += "-------------|--------\n";
@@ -34,13 +34,13 @@ public class HeartRateTracker {
         return table;
     }
 
-    private int calculateTargetHR(int restingHR, int age, int intensity) {
+    protected int calculateTargetHR(int restingHR, int age, int intensity) {
         double intensityDecimal = intensity / 100.0;
         int targetHR = (int) Math.round((((220 - age) - restingHR) * intensityDecimal) + restingHR);
         return targetHR;
     }
 
-    private int getIntInput(String str) {
+    protected int getIntInput(String str) {
         boolean isInputInt = false;
         int input = 0;
         while (!isInputInt) {

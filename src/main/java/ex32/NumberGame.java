@@ -12,10 +12,10 @@ public class NumberGame {
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
-        NumberGame newGame = new NumberGame();
+        NumberGame myNumberGame = new NumberGame();
 
         System.out.println("Let's play Guess the Number!\n");
-        newGame.playGame();
+        myNumberGame.playGame();
 
     }
 
@@ -56,11 +56,10 @@ public class NumberGame {
         return numGuesses;
     }
 
-    private boolean validateYourGuess(String yourGuess) {
+    protected boolean validateYourGuess(String yourGuess) {
         boolean isInputInt = false;
-        int input = 0;
         try {
-            input = Integer.parseInt(yourGuess);
+            int input = Integer.parseInt(yourGuess);
             isInputInt = true;
         } catch (NumberFormatException nfe) {
             isInputInt = false;
@@ -73,7 +72,7 @@ public class NumberGame {
         return yourGuess;
     }
 
-    private int getCorrectNum(int difficultyLevel) {
+    protected int getCorrectNum(int difficultyLevel) {
         int rangeOfGame = 10^difficultyLevel;
         Random randNum = new Random();
         int correctNum = 1 + randNum.nextInt(rangeOfGame);
