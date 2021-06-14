@@ -30,9 +30,42 @@ public class SortingRecords {
         outputString += "--------------------|-------------------|----------------\n";
         for (int i = 0; i < lastNames.size(); i++) {
             Employee currentEmployee = employeesByLastName.get(lastNames.get(i));
-            outputString += String.format("%s  | %s  | %s\n", currentEmployee.getFullName(), currentEmployee.getPosition(), currentEmployee.getSeparationDate());
+            String nameSpacing = getNameSpacing(currentEmployee);
+            String positonSpacing = getPositionSpacing(currentEmployee);
+            String separationDateSpacing = getSeparationDateSpacing(currentEmployee);
+            outputString += String.format("%s%s|%s%s|%s%s\n", currentEmployee.getFullName(), nameSpacing, currentEmployee.getPosition(), positonSpacing, currentEmployee.getSeparationDate(), separationDateSpacing);
         }
         return outputString;
+    }
+
+    private String getSeparationDateSpacing(Employee currentEmployee) {
+        int lenSeparationDate = currentEmployee.getSeparationDate().length();
+        int numSpaces = 20 - lenSeparationDate;
+        String spaces = "";
+        for (int i = 0; i < numSpaces; i++ ) {
+            spaces += " ";
+        }
+        return spaces;
+    }
+
+    private String getPositionSpacing(Employee currentEmployee) {
+        int lenPosition = currentEmployee.getPosition().length();
+        int numSpaces = 19 - lenPosition;
+        String spaces = "";
+        for (int i = 0; i < numSpaces; i++ ) {
+            spaces += " ";
+        }
+        return spaces;
+    }
+
+    private String getNameSpacing(Employee currentEmployee) {
+        int lenFullName = currentEmployee.getFullName().length();
+        int numSpaces = 20 - lenFullName;
+        String spaces = "";
+        for (int i = 0; i < numSpaces; i++ ) {
+            spaces += " ";
+        }
+        return spaces;
     }
 
     private HashMap<String, Employee> getEmployeeMapByLastName() {
